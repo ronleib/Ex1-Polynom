@@ -2,11 +2,8 @@ package myMath;
 
 public class PolynomTest {
 	public static void main(String[] args) {
-		Functest();
-		stringConstracorTest();
-		test1();
-		test2();
-		Functest();
+		Polynom test = new Polynom("0.0000000000001");
+		System.out.println(test);
 	}
 
 	private static void stringConstracorTest() {
