@@ -29,12 +29,10 @@ class MonomTestJuinit {
 				"x^22222222222222222222222222222222222222222222222" };
 
 		for (int i = 0; i < badMoonomArr.length; i++) {
-
 			try {
 				Monom badMonom = new Monom(badMoonomArr[i]);
 				fail("iligal Monom was created  "+badMoonomArr[i]);
 			}
-
 			catch (Exception e ) {
 			
 			}
@@ -142,17 +140,16 @@ class MonomTestJuinit {
 			assertEquals(exeptedMonom.get_power() ,testMonomLeft.get_power(),"Monom ");
 			assertEquals(exeptedMonom.get_coefficient() ,testMonomLeft.get_coefficient(),"Monom : "+monomTestArr[i]+" and Monom "+monomTOAddArr[i]);
 		}
+	}
+		@Test
+		void equalsTest() {
+			Monom [] actualTest={new Monom("4.0000000000000000x^3"),new Monom("+002x^2"),new Monom("+0.999999999999999")};
+			Monom [] expectedTest={new Monom("3.999999999999999x^3"),new Monom("+2x^2"),new Monom("+1")};
+			for (int i = 0; i < expectedTest.length; i++) {
+			assertEquals(true,actualTest[i].equals(expectedTest[i]),""+i);
+			}
+		}
 
-
-	
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-}

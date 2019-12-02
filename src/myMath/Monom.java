@@ -60,7 +60,7 @@ public class Monom implements function {
 	}
 
 	public boolean isZero() {
-		return this.get_coefficient() == 0;
+		return (Math.abs(this.get_coefficient())<=EPSILON);
 	}
 	// * add your code below **
 
@@ -205,14 +205,23 @@ public class Monom implements function {
 	}
 
 	
-	public boolean equals(Monom other) {
-		double powerDifrence = Math.abs(other._power-this._power);
-		double coffDifrence = Math.abs(other._coefficient-this._coefficient);
-		if((powerDifrence<=EPSILON)&&(coffDifrence<=EPSILON)) return true;
+public boolean equals(Object other) {
 		
-	return false;
+		if (other instanceof Monom) {
+		try {
+		 Monom otherMonom = new Monom (other.toString());
+		double powerDifrence = Math.abs(otherMonom._power-this._power);
+		double coffDifrence = Math.abs(otherMonom._coefficient-this._coefficient);
+		if((powerDifrence<=EPSILON)&&(coffDifrence<=EPSILON)) return true;
+		}
+		
+		catch (Exception e) {
+			return false;
+		}}
+		
+		return false;
+	
 	}
-
 	// * Private Methods and Data **
 
 	private void set_coefficient(double a) {

@@ -37,6 +37,7 @@ public class Polynom implements Polynom_able {
 	 *               example : {(2x^2-4)*(-1.2x-7.1)",$x^2,5x^^b,6x^7.7",5*x^2+1}
 	 */
 	public Polynom(String s) {
+		if(s=="") s="0"; //the case its an empty String make it an readble number
 		s = s.toLowerCase();// in case there is a big X by mistake
 		// boolean debagFlag = false;
 		this.polyMap = new HashMap<Integer, Monom>(); // key is the intger and monom is the value
@@ -200,7 +201,7 @@ public class Polynom implements Polynom_able {
 	 * 
 	 * @param an valid Polynom_able that is instance of Polynom
 	 */
-	public boolean equals(Polynom_able other) {
+	public boolean equals(Object other) {
 
 		if (other instanceof Polynom) {
 			Polynom p = new Polynom(other.toString());
@@ -239,17 +240,17 @@ public class Polynom implements Polynom_able {
 	 * function to check if the Polynom is the zero Polynom .that means he have no
 	 * Monoms with coeficent diffrent than zero
 	 */
+	
 	public boolean isZero() {
 		if (this.toString() == "")
 			return true; // if its the Polynom as String is "" return true because off curse tthat mean
 		// all the coeficent are zero
 		for (Integer key : polyMap.keySet()) {
-			if (polyMap.get(key).get_coefficient() != 0)
+			if (!(Math.abs(polyMap.get(key).get_coefficient())<=polyMap.get(key).EPSILON))
 				return false; // if polynom contains any x that with 1 power or more
 		}
 		return true;
 	}
-
 	@Override
 	/**
 	 * In mathematical analysis, the intermediate value theorem states that if f is
@@ -267,14 +268,16 @@ public class Polynom implements Polynom_able {
 		if (eps < 0) {
 			throw new RuntimeException(" eps <0 Not possible find root ");
 		}
-		if (this.f(x0) * this.f(x1) < 0)
+		if (!((this.f(x0) * this.f(x1)) < 0))
 			return Integer.MIN_VALUE;
-		double c = 0, min = 0, max = 0;
-		if (x0 < x1)
+		double c = 0.1, min = 0, max = 0;
+		if (x0 < x1) {
 			min = x0;
-		else
+			max = x1;}
+		else {
 			max = x0;
-		while (!(min < eps && eps < max)) {
+			min = x1;}
+		while (((max-min)>=eps)&&c>0.00001) {
 			c = (max + min) / 2;
 			if (this.f(c) > 0)
 				max = c;
