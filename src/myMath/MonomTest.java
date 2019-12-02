@@ -38,6 +38,12 @@ public class MonomTest {
 			System.out.println(i + ") " + m + "    \tisZero: " + m.isZero() + "\t f(" + i + ") = " + fx);
 		}
 	}
+	
+	
+	
+	
+	
+	
 
 	private static void test2() {
 		System.out.println("*****  Test2:  *****");
