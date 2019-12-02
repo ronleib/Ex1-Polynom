@@ -39,12 +39,6 @@ public class MonomTest {
 		}
 	}
 	
-	
-	
-	
-	
-	
-
 	private static void test2() {
 		System.out.println("*****  Test2:  *****");
 		ArrayList<Monom> monoms = new ArrayList<Monom>();
