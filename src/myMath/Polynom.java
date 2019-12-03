@@ -1,6 +1,10 @@
 package myMath;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import myMath.Monom;
 
 /**
@@ -37,7 +41,8 @@ public class Polynom implements Polynom_able {
 	 *               example : {(2x^2-4)*(-1.2x-7.1)",$x^2,5x^^b,6x^7.7",5*x^2+1}
 	 */
 	public Polynom(String s) {
-		if(s=="") s="0"; //the case its an empty String make it an readble number
+		if (s == "")
+			s = "0"; // the case its an empty String make it an readble number
 		s = s.toLowerCase();// in case there is a big X by mistake
 		// boolean debagFlag = false;
 		this.polyMap = new HashMap<Integer, Monom>(); // key is the intger and monom is the value
@@ -240,17 +245,18 @@ public class Polynom implements Polynom_able {
 	 * function to check if the Polynom is the zero Polynom .that means he have no
 	 * Monoms with coeficent diffrent than zero
 	 */
-	
+
 	public boolean isZero() {
 		if (this.toString() == "")
 			return true; // if its the Polynom as String is "" return true because off curse tthat mean
 		// all the coeficent are zero
 		for (Integer key : polyMap.keySet()) {
-			if (!(Math.abs(polyMap.get(key).get_coefficient())<=polyMap.get(key).EPSILON))
+			if (!(Math.abs(polyMap.get(key).get_coefficient()) <= polyMap.get(key).EPSILON))
 				return false; // if polynom contains any x that with 1 power or more
 		}
 		return true;
 	}
+
 	@Override
 	/**
 	 * In mathematical analysis, the intermediate value theorem states that if f is
@@ -273,11 +279,12 @@ public class Polynom implements Polynom_able {
 		double c = 0.1, min = 0, max = 0;
 		if (x0 < x1) {
 			min = x0;
-			max = x1;}
-		else {
+			max = x1;
+		} else {
 			max = x0;
-			min = x1;}
-		while (((max-min)>=eps)&&c>0.00001) {
+			min = x1;
+		}
+		while (((max - min) >= eps) && c > 0.00001) {
 			c = (max + min) / 2;
 			if (this.f(c) > 0)
 				max = c;
@@ -415,10 +422,22 @@ public class Polynom implements Polynom_able {
 		return ans;
 	}
 
+	public static void main(String[] args) {
+		Polynom test = new Polynom("5x^2+6x+4");
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(test.polyMap);
+		System.out.println(jsonString);
+		Polynom test2=new Polynom("0");
+		test2.initFromString(jsonString);
+		System.out.println("\n"+test2.toString());
+	}
+
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+			Gson gson = new Gson();
+		  	Type type = new TypeToken<HashMap<Integer, Monom>>(){}.getType();
+	       this.polyMap = gson.fromJson(s, type);
+		return this;
 	}
 
 }
