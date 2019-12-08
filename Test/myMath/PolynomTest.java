@@ -4,6 +4,9 @@ public class PolynomTest {
 	public static void main(String[] args) {
 		Polynom test = new Polynom("0.0000000000001");
 		System.out.println(test);
+		stringConstracorTest();
+		test1();
+		test2();
 	}
 
 	private static void stringConstracorTest() {
