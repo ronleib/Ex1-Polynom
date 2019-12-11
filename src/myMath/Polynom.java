@@ -230,41 +230,42 @@ public class Polynom implements Polynom_able {
 		 * 
 		 * @param an valid Polynom_able that is instance of Polynom
 		 */
-		public boolean equals(Object other) {
+	public boolean equals(Object other) {
 
-			if (other instanceof Polynom) {
-				Polynom p = new Polynom(other.toString());
+		if (other instanceof Polynom) {
+			Polynom p = new Polynom(other.toString());
+		
+			try {
+				for (Integer key : polyMap.keySet()) {
+					if(p.polyMap.size()+1==this.polyMap.size())
+						if(this.polyMap.get(key).get_coefficient()==0.0)
+						continue;
+					if (Math.abs(
+							polyMap.get(key).get_coefficient() - p.polyMap.get(key).get_coefficient()) <= 0.000001) { // check
+						// if
+						// all
+						// the
+						// coeficent is
+						// the
+						// same and all
+						// the
+						// power are the
+						// same
 
-				try {
-					for (Integer key : polyMap.keySet()) {
-						if (Math.abs(
-								polyMap.get(key).get_coefficient() - p.polyMap.get(key).get_coefficient()) <= 0.000001) { // check
-							// if
-							// all
-							// the
-							// coeficent is
-							// the
-							// same and all
-							// the
-							// power are the
-							// same
+					} else
+						return false; // the case the power is the same but coeficent is diffrent
 
-						} else
-							return false; // the case the power is the same but coeficent is diffrent
-
-					}
-					return true; // after all the power and the coeficent was checed return true
 				}
-
-				catch (Exception e) {
-					return false;
-				} // incase somthing go wrong return false the case the power is not the same
-			} else {
-				throw new RuntimeException(" your Polynom_able is not  a Polynom type ");
+				return true; // after all the power and the coeficent was checed return true
 			}
+
+			catch (Exception e) {
+				return false;
+			} // incase somthing go wrong return false the case the power is not the same
+		} else {
+			throw new RuntimeException(" your Polynom_able is not  a Polynom type ");
 		}
-
-
+	}
 	@Override
 	/**
 	 * function to check if the Polynom is the zero Polynom .that means he have no
