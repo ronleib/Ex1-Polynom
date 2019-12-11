@@ -137,7 +137,7 @@ class PolynomTestJuinit {
 			assertEquals(false, actualTestFail[i].isZero(),"index:"+i+"po:"+actualTest[i].toString());
 		}
 	}
-	@Test
+	@Ignore
 	void rootTest(){
 		Polynom [] actualRoot={new Polynom("-1x^2+2x"),new Polynom("x^7-x+x^3")};
 		double  [] expectedRootTrue= {0,0};

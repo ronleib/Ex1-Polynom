@@ -13,53 +13,20 @@ public class ComplexFunction implements complex_function {
 	// the last level of the tree )
 	private ComplexFunction left; // reference the right function
 	private ComplexFunction right; // reference the left function
-	private ComplexFunction root; // reference the left function
 	
-	
-
-	public ComplexFunction getUp() {
-		return up;
-	}
-
-	public void setUp(ComplexFunction up) {
-		this.up = up;
-	}
-
-	public Operation getSymbol() {
-		return symbol;
-	}
-
-	public void setSymbol(Operation symbol) {
-		this.symbol = symbol;
-	}
-
-	public Polynom getPoly() {
-		return poly;
-	}
-
-	public void setPoly(Polynom poly) {
-		this.poly = poly;
-	}
-
-	public ComplexFunction getLeft() {
-		return left;
-	}
-
-	public void setLeft(ComplexFunction left) {
-		this.left = left;
-	}
-
-	public ComplexFunction getRight() {
-		return right;
-	}
-
-	public void setRight(ComplexFunction right) {
-		this.right = right;
-	}
-
-	
-	public ComplexFunction(Polynom poly) {
-		this.poly=poly;
+	public ComplexFunction(function func ) {
+		if (func instanceof Monom ||func instanceof Polynom ) {
+			this.poly= new Polynom(func.toString());
+			
+		}
+		else if (func instanceof ComplexFunction) {
+			
+			this.left = (ComplexFunction) func.copy();
+		}
+		else {
+			throw new RuntimeException(
+					" You need insert an a Monom ,  Polynom or ComplexFunction !  ");
+		}
 		
 	}
 	
@@ -77,17 +44,14 @@ public class ComplexFunction implements complex_function {
 		this.symbol = null;
 		this.up = null;
 		this.poly = new Polynom("0");
-		this.root= null;
+
 	}
 	
 	public ComplexFunction (String a , function left , function right ) {
 		this(ifOperation(a),left,right);
-		
+	
 	}
 
-
-	
-	
 	
 	public  ComplexFunction(Operation symbol, function left, function right) {
 
@@ -98,7 +62,6 @@ public class ComplexFunction implements complex_function {
 			this.symbol = null;
 			this.up = null;
 			this.poly = new Polynom("0");
-			this.root=this;
 			return;
 		}
 		
@@ -108,7 +71,6 @@ public class ComplexFunction implements complex_function {
 			throw new RuntimeException(
 					" You cannot insert an null ! insert a Monom ,  Polynom or ComplexFunction bouth to left and right.   ");
 		} else {
-			this.root=this;
 			if (symbol != null)
 				this.symbol = symbol;
 			/////// left///////
@@ -295,8 +257,7 @@ public class ComplexFunction implements complex_function {
 				String right = devide.substring(devide.indexOf("_") + 1, devide.length());
 
 				currNode.symbol = ifOperation(scine); // set the symbol of curr node to cinde with a helping function
-				if (debugFlag)
-					System.out.println("left is : " + left + " right is :  " + right);
+				if (debugFlag) System.out.println("left is : " + left + " right is :  " + right);
 				currNode.left = (ComplexFunction) initFromString(left);
 				currNode.right = (ComplexFunction) initFromString(right);
 
@@ -371,6 +332,7 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public void plus(function f1) {
+		
 		
 		ComplexFunction left = (ComplexFunction) this.copy();
 		function right = f1.copy();
@@ -513,12 +475,12 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public function left() {
-		return this.getLeft();
+		return this.left();
 	}
 
 	@Override
 	public function right() {
-		return this.getRight();
+		return this.right();
 	}
 
 	@Override

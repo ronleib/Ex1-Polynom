@@ -36,6 +36,6 @@ public interface functions extends Collection<function>{
  */
 	public void drawFunctions(String json_file);
 	
-	public function copy(); // clone
+
 	
 }

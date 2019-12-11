@@ -2,6 +2,7 @@ package myMath;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -194,48 +195,75 @@ public class Polynom implements Polynom_able {
 
 	}
 
-	// @Override (removed i hope it's unneseserry )
 	/**
 	 * function to multiply a Polynom_able from the Polynom onject by multiply all
 	 * the Monom's from the Polynom object (Hashtable)
 	 * 
 	 * @param an valid Polynom_able that is instance of Polynom
 	 */
-	public boolean equals(Object other) {
 
-		if (other instanceof Polynom||other instanceof Monom) {
-			Polynom p = new Polynom(other.toString());
-
-			try {
-				for (Integer key : polyMap.keySet()) {
-					System.out.println("this"+polyMap.get(key).get_coefficient());
-					System.out.println("other"+p.polyMap.get(key).get_coefficient());
-					if (Math.abs(
-							polyMap.get(key).get_coefficient() - p.polyMap.get(key).get_coefficient()) <= 0.000001) { // check
-						// if
-						// all
-						// the
-						// coeficent is
-						// the
-						// same and all
-						// the
-						// power are the
-						// same
-
-					} else
-						return false; // the case the power is the same but coeficent is diffrent
-
-				}
-				return true; // after all the power and the coeficent was checed return true
-			}
-
-			catch (Exception e) {
-				return false;
-			} // incase somthing go wrong return false the case the power is not the same
-		} else {
-			throw new RuntimeException(" your Polynom_able is not  a Polynom type ");
-		}
+	@Override
+	public int hashCode() {
+		return Objects.hash(polyMap);
 	}
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj) {
+//			return true;
+//		}
+//		if (obj == null) {
+//			return false;
+//		}
+//		if (!(obj instanceof Polynom)) {
+//			return false;
+//		}
+//		Polynom other = (Polynom) obj;
+//		return Objects.equals(polyMap, other.polyMap);
+//	}
+
+	
+	// @Override (removed i hope it's unneseserry )
+		/**
+		 * function to multiply a Polynom_able from the Polynom onject by multiply all
+		 * the Monom's from the Polynom object (Hashtable)
+		 * 
+		 * @param an valid Polynom_able that is instance of Polynom
+		 */
+		public boolean equals(Object other) {
+
+			if (other instanceof Polynom) {
+				Polynom p = new Polynom(other.toString());
+
+				try {
+					for (Integer key : polyMap.keySet()) {
+						if (Math.abs(
+								polyMap.get(key).get_coefficient() - p.polyMap.get(key).get_coefficient()) <= 0.000001) { // check
+							// if
+							// all
+							// the
+							// coeficent is
+							// the
+							// same and all
+							// the
+							// power are the
+							// same
+
+						} else
+							return false; // the case the power is the same but coeficent is diffrent
+
+					}
+					return true; // after all the power and the coeficent was checed return true
+				}
+
+				catch (Exception e) {
+					return false;
+				} // incase somthing go wrong return false the case the power is not the same
+			} else {
+				throw new RuntimeException(" your Polynom_able is not  a Polynom type ");
+			}
+		}
+
 
 	@Override
 	/**
@@ -271,8 +299,10 @@ public class Polynom implements Polynom_able {
 		if (eps < 0) {
 			throw new RuntimeException(" eps <0 Not possible find root ");
 		}
-		if (!((this.f(x0) * this.f(x1)) < 0))
-			return Integer.MIN_VALUE;
+		if (!((this.f(x0) * this.f(x1)) < 0)) {
+			if(this.f(x0)==0) { return x0;}
+			if(this.f(x1)==0) {return x1;}
+			return Integer.MIN_VALUE;}
 		double c = 0.1, min = 0, max = 0;
 		if (x0 < x1) {
 			min = x0;
@@ -281,7 +311,7 @@ public class Polynom implements Polynom_able {
 			max = x0;
 			min = x1;
 		}
-		while (((max - min) >= eps) && c > 0.00001) {
+		while (((max - min) >= eps)&&(c>eps)) {
 			c = (max + min) / 2;
 			if (this.f(c) > 0)
 				max = c;
@@ -346,11 +376,10 @@ public class Polynom implements Polynom_able {
 		while ((smol + eps) <= big) {
 			smol += eps;
 			if (this.f(smol) > 0)
-				sumPositive = (eps * this.f(smol));
-		}
-		if ((smol + eps) > big)
+				sumPositive += (eps * this.f(smol));
+		}if ((smol + eps) > big)
 			if (this.f(smol - big) > 0)
-				sumPositive = ((Math.abs(smol - big)) * this.f(smol));
+				sumPositive += ((Math.abs(smol - big)) * this.f(smol));
 		return sumPositive;
 	}
 
