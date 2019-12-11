@@ -497,12 +497,15 @@ public class ComplexFunction implements complex_function {
 		
 		}
 		
+		
 		return true; 
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
+		int a =0;
 		return equals( obj, 0.5,1000) ; // the defualt step
+		
 	}
 	
 
