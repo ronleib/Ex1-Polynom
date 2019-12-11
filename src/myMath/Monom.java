@@ -247,14 +247,16 @@ public class Monom implements function {
 
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new Monom(s);
 	}
 
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		Monom ansMonom = new Monom();
+		ansMonom._coefficient=this._coefficient;
+		ansMonom._power=get_power();
+		return ansMonom;
 	}
 	public static void main(String[] args) {
 		Monom a = new Monom("2");

@@ -41,6 +41,7 @@ public class Polynom implements Polynom_able {
 	 *               example : {(2x^2-4)*(-1.2x-7.1)",$x^2,5x^^b,6x^7.7",5*x^2+1}
 	 */
 	public Polynom(String s) {
+		s = s.replaceAll("\\s+", ""); // delete all the spaces
 		if (s == "")
 			s = "0"; // the case its an empty String make it an readble number
 		s = s.toLowerCase();// in case there is a big X by mistake
@@ -119,15 +120,9 @@ public class Polynom implements Polynom_able {
 	 */
 
 	public void add(Monom m1) {
-		Monom tempMonom = new Monom("0");
 		if (polyMap.containsKey(m1.get_power())) // the case there alresdy is polynom with what power
 		{
-			// tempMonom = tempMonom.deepCopy(m1, tempMonom);// store the monom that alredy
-			// in the map in a temp monom
-			tempMonom = new Monom(m1);
-			m1.add(polyMap.get(m1.get_power()));
-			polyMap.remove(tempMonom.get_power());// delete the old monom from the hashmap
-			polyMap.put(tempMonom.get_power(), m1); // put the new monom into the map
+		polyMap.get(m1.get_power()).add(m1);
 
 		}
 
@@ -208,11 +203,13 @@ public class Polynom implements Polynom_able {
 	 */
 	public boolean equals(Object other) {
 
-		if (other instanceof Polynom) {
+		if (other instanceof Polynom||other instanceof Monom) {
 			Polynom p = new Polynom(other.toString());
 
 			try {
 				for (Integer key : polyMap.keySet()) {
+					System.out.println("this"+polyMap.get(key).get_coefficient());
+					System.out.println("other"+p.polyMap.get(key).get_coefficient());
 					if (Math.abs(
 							polyMap.get(key).get_coefficient() - p.polyMap.get(key).get_coefficient()) <= 0.000001) { // check
 						// if
@@ -299,10 +296,11 @@ public class Polynom implements Polynom_able {
 	 * copies the Polynom to a Polynom_able
 	 */
 	public Polynom_able copy() {
-		Polynom_able copiedPoly = new Polynom(); // init the new polynom
+		Polynom copiedPoly = new Polynom(); // init the new polynom
 		for (Integer x : polyMap.keySet()) { // the main loop
-			copiedPoly.add(polyMap.get(x)); // addidng all the monoms one by one
-
+			Monom tempMonom = new Monom();
+			tempMonom=(Monom) polyMap.get(x).copy();
+			copiedPoly.polyMap.put(x, tempMonom);
 		}
 		return copiedPoly;
 	}
@@ -423,21 +421,19 @@ public class Polynom implements Polynom_able {
 	}
 
 	public static void main(String[] args) {
-		Polynom test = new Polynom("5x^2+6x+4");
-		Gson gson = new Gson();
-		String jsonString = gson.toJson(test.polyMap);
-		System.out.println(jsonString);
-		Polynom test2=new Polynom("0");
-		test2.initFromString(jsonString);
-		System.out.println("\n"+test2.toString());
+	Polynom test1 = new Polynom("x^2");
+	Polynom test2 = (Polynom) test1.copy();
+	test1.substract(new Polynom ("x^2"));
+	System.out.println(test1);
+	System.out.println(test2);
+		
+		
+		
 	}
 
 	@Override
 	public function initFromString(String s) {
-			Gson gson = new Gson();
-		  	Type type = new TypeToken<HashMap<Integer, Monom>>(){}.getType();
-	       this.polyMap = gson.fromJson(s, type);
-		return this;
+			return new Polynom(s);
 	}
 
 }
