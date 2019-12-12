@@ -132,7 +132,6 @@ public class PolynomTestEvgeny {
 		add = (Polynom) p1.copy();
 		substract = (Polynom)p1.copy();
 		add.add(p2);
-		System.out.println(add);
 		substract.substract(p2);
 		if (!add.equals(p3)) {
 			fails++;
@@ -165,12 +164,7 @@ public class PolynomTestEvgeny {
 		}
 		Polynom multiply = new Polynom();
 		multiply = (Polynom) p1.copy();
-		System.out.println(multiply);
-		System.out.println(p2);
 		multiply.multiply(p2);
-		System.out.println(multiply);
-		System.out.println(p3);
-		System.out.println(multiply.equals(p3));
 		if (!multiply.equals(p3)) {
 			fails++;
 			System.out.println("fail mult");

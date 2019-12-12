@@ -218,6 +218,9 @@ public class Monom implements function {
 		catch (Exception e) {
 			return false;
 		}}
+		else if (other instanceof Polynom || other instanceof ComplexFunction ) { // the case other is polynom or complex function 
+			return other.equals(this);
+		}
 		
 		return false;
 	
@@ -259,8 +262,14 @@ public class Monom implements function {
 		return ansMonom;
 	}
 	public static void main(String[] args) {
-		Monom a = new Monom("2");
-		System.out.println(a.isZero());
+		Monom a = new Monom("1");
+		Polynom b = new Polynom("2") ;
+		ComplexFunction c = new ComplexFunction(Operation.Plus, a, a);
+		System.out.println(a.equals(b));
+		System.out.println(b.equals(a));
+		System.out.println(b.equals(c));
+		System.out.println(c.equals(a));
+		System.out.println(c.equals(b));
 		
 		
 	}

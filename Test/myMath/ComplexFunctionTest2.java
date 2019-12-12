@@ -75,44 +75,56 @@ class ComplexFunctionTest2 {
 
 	}
 
-	@Ignore
-	void testPlus() {
-		fail("Not yet implemented"); // TODO
-	}
 
-	@Ignore
-	void testMul() {
-		fail("Not yet implemented"); // TODO
-	}
 
-	@Ignore
-	void testDiv() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	void testMax() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	void testMin() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	void testComp() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	void testToString() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
+	@Test
 	void testEqualsObject() {
-		fail("Not yet implemented"); // TODO
+		String[] complexFunctionString = {"plus(x^2,x)" ,"-x^5","","plus(plus(plus(1.0x^1,2.0x^2),3.0x^3),4.0x^4)"};
+		function[] func = {new Polynom("x^2+x"),new Monom("-x^5"),new Monom(""),new Polynom("4x^4+3x^3+2x^2+x")};
+		
+		for (int j = 0; j < complexFunctionString.length; j++) {
+			try {
+				ComplexFunction complex = new ComplexFunction();
+				complex = (ComplexFunction) complex.initFromString(complexFunctionString[j]);
+				assertEquals(complex,func[j]);
+
+			} catch (Exception e) {
+				fail();
+			}
+		}
+	}
+	
+	
+	void testPlus() {//if it works and the f work the all the functions that are the same will work also ( div , mul ..) 
+		String[] monomsTest = {"", "x","3.2x^2","-3","-1.5x^2"};
+//		function [] complexFunctionTestPlus= {new ComplexFunction(),
+//											new Polynom("2x^2+x^3+X"),
+//											}
+		String textmonoms="plus(x^2+5x+6,-x^2-5x-6)",
+				textPolinom="",text="",
+				textCF="plus(x^2+5x+6,-x^2-5x-6)";
+		ComplexFunction complex2 = new ComplexFunction();
+		ComplexFunction complex = new ComplexFunction();
+		complex = (ComplexFunction) complex.initFromString("plus(x^2+5x+6,-x^2-5x-6)");
+		for (int j = 0; j < monomsTest.length; j++) {
+			textmonoms="plus(plus(x^2+5x+6,-x^2-5x-6),"+monomsTest[j]+")";
+			try {
+				complex2 = (ComplexFunction) complex2.initFromString(textmonoms);
+				complex.plus(new Monom(monomsTest[j]));
+				assertEquals(complex2,complex);
+			} catch (Exception e) {
+				fail("testPlus-textmonoms");
+		}
+			try {
+			textPolinom+=monomsTest[j];
+			text="plus(plus(x^2+5x+6,-x^2-5x-6),"+textPolinom+")";
+			complex2 = (ComplexFunction) complex2.initFromString(text);
+			complex.plus(new Polynom(textPolinom));
+			assertEquals(complex2,complex);
+		} catch (Exception e) {
+			fail("testPlus-textPolinom");
+	}
+		}
 	}
 
 }

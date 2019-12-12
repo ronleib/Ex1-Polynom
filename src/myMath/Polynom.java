@@ -232,7 +232,7 @@ public class Polynom implements Polynom_able {
 		 */
 	public boolean equals(Object other) {
 
-		if (other instanceof Polynom) {
+		if (other instanceof Polynom || other instanceof Monom) {
 			Polynom p = new Polynom(other.toString());
 		
 			try {
@@ -261,9 +261,16 @@ public class Polynom implements Polynom_able {
 
 			catch (Exception e) {
 				return false;
-			} // incase somthing go wrong return false the case the power is not the same
-		} else {
-			throw new RuntimeException(" your Polynom_able is not  a Polynom type ");
+			} }// incase somthing go wrong return false the case the power is not the same
+			
+			
+			else if(other instanceof ComplexFunction) {
+				
+			return other.equals(this); // if its a coplex function call the coplexfunction equals (with the f )
+				
+			}
+		else {
+			throw new RuntimeException(" your function  must be Monom Polynom or Complexfunction ");
 		}
 	}
 	@Override

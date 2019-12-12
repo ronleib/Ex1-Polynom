@@ -57,23 +57,19 @@ public class Functions_GUI implements functions {
 	public Iterator<function> iterator() {
 		return this.iterator();
 	}
-
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return arrFunc.toArray();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+		return arrFunc.toArray(a);
 	}
 
 	@Override
 	public boolean add(function e) {
-		// TODO Auto-generated method stub
-		return false;
+		return arrFunc.add(e);
 	}
 
 	@Override
@@ -81,27 +77,32 @@ public class Functions_GUI implements functions {
 		return arrFunc.remove(o);
 	}
 
+
+
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		return arrFunc.contains(c);
 	}
 
+
 	@Override
 	public boolean addAll(Collection<? extends function> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return arrFunc.addAll(c);
 	}
+
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-
+		
 		return arrFunc.removeAll(c);
 	}
+
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		return arrFunc.retainAll(c);
 	}
+
 
 	@Override
 	public void clear() {
@@ -109,10 +110,13 @@ public class Functions_GUI implements functions {
 	}
 
 
-	@Override
+	/**
+	 * init a a Functions_gui out of txt file whrere whr function represented as a string separated by a line 
+	 * @param file the file directory on the pc 
+	 */
 	public  void  initFromFile(String file) throws IOException {
 		ComplexFunction toInheretComplex = new ComplexFunction();
-		String[] arr= null;
+		String[] arrReadToFunc= null;
 	    ArrayList<String> stringFunctions = new ArrayList<String>();
 		   try 
 		    { 
@@ -121,28 +125,28 @@ public class Functions_GUI implements functions {
 		        BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
 		        String str_line; 
 
-		        while ((str_line = buffer.readLine()) != null) 
+		        while ((str_line = buffer.readLine()) != null)  // while it's not a new line 
 		        { 
 		            str_line = str_line.trim(); 
 		            if ((str_line.length()!=0))  
 		            { 
-		            	stringFunctions.add(str_line);
+		            	stringFunctions.add(str_line); // add all the functions to a string arr 
 		            } 
 		        }
  
-		        arr = (String[])stringFunctions.toArray(new String[stringFunctions.size()]);
+		        arrReadToFunc = (String[])stringFunctions.toArray(new String[stringFunctions.size()]);
 		    }catch (Exception e) {
 		
 			}
 		   
-		   for (int j = 0; j < arr.length; j++) {
+		   for (int j = 0; j < arrReadToFunc.length; j++) { // take all the string and creat a functin's of them 
 				try { // the case ite a complex function 
-				function temp =new ComplexFunction();
-				temp=temp.initFromString(arr[j]);
+				function temp =new ComplexFunction(); 
+				temp=temp.initFromString(arrReadToFunc[j]);
 				arrFunc.add(temp);
 				} 
-					catch (Exception e) { // the case its Monom or Polynom
-					arrFunc.add(new Polynom().initFromString(arr[j]));
+					catch (Exception e) { // the case its Monom or Polynom if it's not a Monom or Polynom iw till throw E
+					arrFunc.add(new Polynom().initFromString(arrReadToFunc[j]));
 				}			   
 		}
 		
@@ -151,19 +155,21 @@ public class Functions_GUI implements functions {
 
 	}
 
-	@Override
+	/** asve all the current functions to file where the functions are represented as a astring 
+	 * @param file for the output 
+	 */
 	public void saveToFile(String file) throws IOException {
-		Iterator<function> saveTo = arrFunc.iterator();
+		Iterator<function> saveTo = arrFunc.iterator(); // the iterator 
 		StringBuilder sBuld = new StringBuilder();
 		
-		while(saveTo.hasNext()) {
+		while(saveTo.hasNext()) { // take all the functions in the file and save them to the file 
 			function save = saveTo.next();
 			sBuld.append(save.toString());
 				sBuld.append("\n");	
 		}
 		try{
 			PrintWriter pw = new PrintWriter(new File(file));
-			pw.write(sBuld.toString());
+			pw.write(sBuld.toString()); //whrte it as a String 
 			pw.close();
 		} 
 		catch (Exception e){
@@ -173,7 +179,16 @@ public class Functions_GUI implements functions {
 
 	}
 
-	@Override
+	/**
+	 * draw a gui representation of the functio  
+	 * @param width the width  of the window 
+	 * @param height - the height of the window 
+	 * @param  rx - the range of x axis 
+	 * @param ry - the of y axis 
+	 * @param resolution the number of points that we draw on the function between rx.getmin and rx.gexmax
+	 * 
+	 * 
+	 */
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
 		// number of line segments to plot
 		int n = resolution;
@@ -236,7 +251,15 @@ public class Functions_GUI implements functions {
 
 	}
 	
-	public void drawFunctions(int Width,int Height,double[] x ,double[]y,int Resolution){
+	/**
+	 * 
+	 * @param convert from json format class (with an arr ) and call the main draw function 
+	 * @param height - the height of the window 
+	 * @param  x - the range of x axis 
+	 * @param y - the of y axis 
+	 * @param resolution the number of points that we draw on the function between rx.getmin and rx.gexmax
+	 */
+	private void drawFunctions(int Width,int Height,double[] x ,double[]y,int Resolution){ 
 		if(x.length<1||y.length<1) 	throw new RuntimeException("must enter 2 params ");
 		Range _x = new Range(x[0], x[1]);
 		Range _y = new Range(y[0], y[1]);
@@ -244,7 +267,9 @@ public class Functions_GUI implements functions {
 
 	}
 
-	@Override
+	/**
+	 * draw a function out of an json file after deserializeing it
+	 */
 	public void drawFunctions(String json_file) {
 		Gson gson = new Gson();
 		
@@ -253,7 +278,6 @@ public class Functions_GUI implements functions {
 			GUI_params params = (GUI_params) gson.fromJson(new FileReader(json_file), GUI_params.class);
 			drawFunctions(params.Width,params.Height,params.Range_X,params.Range_Y,params.Resolution);
 		} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

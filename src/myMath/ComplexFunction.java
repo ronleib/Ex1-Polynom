@@ -5,21 +5,41 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import javax.management.RuntimeErrorException;
 import org.junit.jupiter.engine.discovery.predicates.IsPotentialTestContainer;
 
+
+
+/**
+ * ComplexFunction is a function made of connecting simple ( Monom or Polynom ) functions with an Operation with the tree database.
+ * altroght ComplexFunction can input an Monom it will change it to Polynom because Polynom contains all the MOnom methods you wont feel the difference as user but it's still important to know .
+ * Plus: plus(f1(x), f2(x)),  Times: mul(f1(x), f2(x)), Divid: div(f1(x), f2(x)), Max: max(f1(x), f2(x)), Min: min(f1(x), f2(x)), Comp: comp(f1(x), f2(x)) == f1(f2(x))
+ * this class contains multiple methods on this function such as f , equals , and more...
+ * the ComplexFunction is the type function and have all the function interface methods included.
+ * fore more information read the wiki.
+ * @author Simon Piklov and Ron Leib 
+ *
+ */
 public class ComplexFunction implements complex_function {
 
-	private ComplexFunction up;// reference to app Node
+	
+	// the tree values 
+
 	private Operation symbol; // the operation enum
 	private Polynom poly; // the Polynom (should be present only if the enum is null ! that mean only in
 	// the last level of the tree )
 	private ComplexFunction left; // reference the right function
 	private ComplexFunction right; // reference the left function
 	
+	
+	/**
+	 * ComplexFunction constractor of onre ( Monom or Polynom or ComplexFunction ) functions with an null as operation 
+	 * @param func
+	 */
 	public ComplexFunction(function func ) {
-		if (func instanceof Monom ||func instanceof Polynom ) {
+		this.symbol=null;
+		if (func instanceof Monom ||func instanceof Polynom ) { // the case func is Monom or polynom (change it to polynom)
 			this.poly= new Polynom(func.toString());
 			
 		}
-		else if (func instanceof ComplexFunction) {
+		else if (func instanceof ComplexFunction) { // the case it's  a ComplexFunction put it to the left 
 			
 			this.left = (ComplexFunction) func.copy();
 		}
@@ -30,7 +50,9 @@ public class ComplexFunction implements complex_function {
 		
 	}
 	
-	private void voidCopy (ComplexFunction other) {
+	
+	//helping function to make the copy in place 
+	private void voidCopy (ComplexFunction other) { // use the copy method for copy 
 		
 		this.left=(ComplexFunction) other.left.copy();
 		this.right=(ComplexFunction) other.right.copy();
@@ -38,67 +60,76 @@ public class ComplexFunction implements complex_function {
 		
 	}
 	
+	/**
+	 * ComplexFunction defualt constractor all the tree params as null 
+	 */
 	public ComplexFunction() {
 		this.left = null;
 		this.right = null;
 		this.symbol = null;
-		this.up = null;
 		this.poly = new Polynom("0");
 
 	}
 	
-	public ComplexFunction (String a , function left , function right ) {
-		this(ifOperation(a),left,right);
+	
+	/**
+	 * ComplexFunction constractor for string and left and right function when the operation can be one of the params listed bellow or null , if it us a nuul only one function can be in the CompleFunction 
+	 * @param operation - string of the type : Plus, Times, Divid, Max, Min, Comp  ,times , div ,mul. there is no importance for small or big letters 
+	 * @param  function of the the type Monom or Polynom or ComplexFunction
+	 * @param  function of the the type Monom or Polynom or ComplexFunction
+	 */
+	public ComplexFunction (String operation , function left , function right ) { //call the Operation constractor 
+		this(ifOperation(operation),left,right);
 	
 	}
 
-	
+	/**
+	 *ComplexFunction contractor for Operation and left and right function when the operation can be one of the params listed bellow or null , if it us a nuul only one function can be in the CompleFunction  
+	 * @param symbol Operation :   Plus, Times, Divid, Max, Min, Comp  important ! None and Error are Not supported and if you will put them you will get an exception 
+	 * @param left -  function of the the type Monom or Polynom or ComplexFunction
+	 * @param right -  function of the the type Monom or Polynom or ComplexFunction
+	 */
 	public  ComplexFunction(Operation symbol, function left, function right) {
 
 		if ((left == null && right == null && symbol == null)) {
-			// , should be defualt constracotr
+			//if all the params are null make it an empty ComplexFunction
 			this.left = null;
 			this.right = null;
 			this.symbol = null;
-			this.up = null;
 			this.poly = new Polynom("0");
 			return;
 		}
 		
 		
 
-		if (((left == null || right == null) && symbol != Operation.None) || (left != null && right != null && symbol == null)) {
+		if (((left == null || right == null) && symbol != null) || (left != null && right != null && symbol == null)) { // the case it two functions with mo operation between 
 			throw new RuntimeException(
 					" You cannot insert an null ! insert a Monom ,  Polynom or ComplexFunction bouth to left and right.   ");
 		} else {
 			if (symbol != null)
-				this.symbol = symbol;
+				this.symbol = symbol; // make the symbol this symbol 
 			/////// left///////
 			if (left != null) {
 				if (left instanceof Monom || left instanceof Polynom) { // if it's a Polynom or Monom downcast it to
 					// Polynom
-					Polynom temp = new Polynom(left.toString());
-					this.left = new ComplexFunction();
+					Polynom temp = new Polynom(left.toString()); // deep copy it with a string 
+					this.left = new ComplexFunction(); // constract  a new function 
 					this.left.poly = temp;
-					this.left.up = this;
 				} else if (left instanceof ComplexFunction) { // if right is ComplexFunction downcast it to
 					// ComplexFunction
 					this.left = (ComplexFunction) left.copy();
-					this.left.up = this;
 				}
 			}
 			/////// right///////
 			if (right != null) {
 				if (right instanceof Monom || right instanceof Polynom) { // if it's a Monom or Polynom downcast it to
 					// Polynom
-					Polynom temp = new Polynom(right.toString());
-					this.right = new ComplexFunction();
-					this.right.poly = temp;
-					this.right.up = this;
+					Polynom temp = new Polynom(right.toString());// deep copy it with a string 
+					this.right = new ComplexFunction(); // constract  a new function
+					this.right.poly = temp; 
 				} else if (right instanceof ComplexFunction) { // if left is ComplexFunction downcast it to
 					// ComplexFunction
 					this.right = (ComplexFunction) right.copy();
-					this.right.up = this;
 				}
 			}
 		}
@@ -106,7 +137,11 @@ public class ComplexFunction implements complex_function {
 	
 
 
-	@Override
+	
+		/** take the x and calculating f(x) at the inputed x,the fanction 
+	 * @param x  :  an double to put in the domain function 
+	 */
+
 	public double f(double x) {
 		
 	
@@ -207,7 +242,13 @@ public class ComplexFunction implements complex_function {
 		return 0;
 	}
 //Plus, Times, Divid, Max, Min, Comp , None, Error
-	static Operation ifOperation(String checker) {
+	
+	/**
+	 * 
+	 * @param checker - a string that represent a Operation 
+	 * @return Operation of the string 
+	 */
+	public static Operation ifOperation(String checker) {
 		checker=checker.toLowerCase();
 		if (checker.equals("plus"))
 			return Operation.Plus;
@@ -222,9 +263,9 @@ public class ComplexFunction implements complex_function {
 		else if (checker.equals("comp"))
 			return Operation.Comp;
 		else if (checker.equals("None"))
-			return Operation.None;
+			throw new RuntimeException("You enterd a unsepurted scine ! ");
 		else if (checker.equals("Error"))
-			return Operation.Error;
+			throw new RuntimeException("You enterd a unsepurted scine ! ");
 		else
 			 throw new RuntimeException("You enterd a wrong scine ! ");
 	}
@@ -232,34 +273,41 @@ public class ComplexFunction implements complex_function {
 	// plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x 4.0)),2.0)
 	// plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x 4.0)),2.0)
 
-	@Override
-	public function initFromString(String s) {
+	
+	
+	
+	/**recursive function to make a Complexfunction out of string example for a good String :"plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0+ 4.0)),2.0)";
+	 * it's imortant that the operation is one of the suppurted one you can read the building counstractor ComplexFunction (String operation , function left , function right ) for more information or the wiki.
+	 * 
+	 * @param complexString - that represent the function "string_Operation(f1,f2)" 
+	 */
+	public function initFromString(String complexString) {
 		
 		try {
 			
 			boolean debugFlag = false;
-			s = s.replaceAll("\\s+", ""); // delete all the spaces
+			complexString = complexString.replaceAll("\\s+", ""); // delete all the spaces
 
-			ComplexFunction currNode = new ComplexFunction();
+			ComplexFunction currNode = new ComplexFunction(); // make a new node 
 
-			if (isPolynomm(s) == true) {// the stoping case
-				currNode.poly = new Polynom(s);
+			if (isPolynomm(complexString) == true) {// the stoping case is that we get to a string that we can make to a polynom 
+				currNode.poly = new Polynom(complexString); // make it a polynom 
 				return currNode;
 			}
 
-			String devide = devideLeftAndRight(s);
-			int firstParenthesis = s.indexOf("(");
-			String scine = s.substring(0, firstParenthesis); // make substring from start to firstParenthesis , it will give
+			String devide = devideLeftAndRight(complexString); // devid the sting with the helping function 
+			int firstParenthesis = complexString.indexOf("(");
+			String scine = complexString.substring(0, firstParenthesis); // make substring from start to firstParenthesis , it will give
 																// as a substring tat will return the scine of the operation
-			s = s.substring(firstParenthesis + 1, s.length() - 1);
+			complexString = complexString.substring(firstParenthesis + 1, complexString.length() - 1);
 			if (!devide.equals("-1")) {
 				String left = devide.substring(0, devide.indexOf("_"));
 				String right = devide.substring(devide.indexOf("_") + 1, devide.length());
 
 				currNode.symbol = ifOperation(scine); // set the symbol of curr node to cinde with a helping function
 				if (debugFlag) System.out.println("left is : " + left + " right is :  " + right);
-				currNode.left = (ComplexFunction) initFromString(left);
-				currNode.right = (ComplexFunction) initFromString(right);
+				currNode.left = (ComplexFunction) initFromString(left); // recurisve call 
+				currNode.right = (ComplexFunction) initFromString(right);// recurisve call
 
 			}
 
@@ -270,7 +318,7 @@ public class ComplexFunction implements complex_function {
 			return currNode;
 			
 		} catch (Exception e) {
-			throw new RuntimeException("unlegit String read user menual ! "+s);
+			throw new RuntimeException("unlegit String read user menual ! "+complexString);
 		}
 		
 
@@ -278,19 +326,26 @@ public class ComplexFunction implements complex_function {
 	}
 
 	// plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x 4.0)),2.0)
+	// helping function to separatee the right and the left function with "_" as separator 
+	
+	/**
+	 * helping function to separatee the right and the left function with "_" as separator 
+	 * @param the sting 
+	 * @return -1 if unlegit or  right and the left function as string  with "_" as separator with out the operation betwwen the function 
+	 */
 	private static String devideLeftAndRight(String s) {
-		String left = "";
-		String right = "";
+		String left = ""; // the left substing 
+		String right = ""; // th right substing 
 		int countParenthesis = 0;
-		int indexOfFirstParenthesis = s.indexOf("(");
-		for (int i = 0; i < s.length(); i++) {
+		int indexOfFirstParenthesis = s.indexOf("("); // the index Of First Parenthesis
+		for (int i = 0; i < s.length(); i++) { //a loop in all the sting chars to see that the 
 			if (s.charAt(i) == '(') {
 				countParenthesis++;
 			} else if (s.charAt(i) == ')') {
 				countParenthesis--;
 			}
 
-			else if ((countParenthesis < 0))
+			else if ((countParenthesis < 0)) // if Parenthesis unlegit 
 				return "-1"; // the case it is unligit String
 			else if (countParenthesis == 1 && s.charAt(i) == ',') {
 				right = s.substring(indexOfFirstParenthesis + 1, i);
@@ -317,20 +372,24 @@ public class ComplexFunction implements complex_function {
 
 	}
 
-	@Override
+	/**
+	 * a deep copy function that return a coplex function. should be use as ComplexFunction aCopy = (ComplexFunction) a.copy();
+	 */
 	public function copy() {
-		if (this.symbol == null) {
-			Polynom temp = new Polynom(this.poly.toString());
-			ComplexFunction copyNew = new ComplexFunction();
-			copyNew.poly = temp;
+		if (this.symbol == null) { // the case it's Monom or Polynom 
+			Polynom temp = new Polynom(this.poly.toString()); // make a new deep copy of Polynom 
+			ComplexFunction copyNew = new ComplexFunction(); // make a new complexfunction 
+			copyNew.poly = temp; // put the poly in 
 			return copyNew;
 		} else {
-			ComplexFunction copyNew = new ComplexFunction(this.symbol, this.left.copy(), this.right.copy());
+			ComplexFunction copyNew = new ComplexFunction(this.symbol, this.left.copy(), this.right.copy()); // do recursive call to left and right 
 			return copyNew;
 		}
 	}
 
-	@Override
+	/** function to change the cuurent coplxfunction symbol to plus , move current node left and f1 right 
+	 * @param f1 - the functiob input can be of the the type Monom or Polynom or ComplexFunction 
+	 */
 	public void plus(function f1) {
 		
 		
@@ -343,7 +402,9 @@ public class ComplexFunction implements complex_function {
 		
 	}
 
-	@Override
+	/** function to change the cuurent coplxfunction symbol to Times , move current node left and f1 right 
+	 * @param f1 - the functiob input can be of the the type Monom or Polynom or ComplexFunction 
+	 */
 	public void mul(function f1) {
 		
 		ComplexFunction left = (ComplexFunction) this.copy();
@@ -352,7 +413,9 @@ public class ComplexFunction implements complex_function {
 		this.voidCopy(copy);
 	}
 
-	@Override
+	/** function to change the cuurent coplxfunction symbol to Divid , move current node left and f1 right 
+	 * @param f1 - the functiob input can be of the the type Monom or Polynom or ComplexFunction 
+	 */
 	public void div(function f1) {
 		
 		ComplexFunction left = (ComplexFunction) this.copy();
@@ -362,7 +425,9 @@ public class ComplexFunction implements complex_function {
 
 	}
 
-	@Override
+	/** function to change the cuurent coplxfunction symbol to Max , move current node left and f1 right 
+	 * @param f1 - the functiob input can be of the the type Monom or Polynom or ComplexFunction 
+	 */
 	public void max(function f1) {
 		
 		ComplexFunction left = (ComplexFunction) this.copy();
@@ -372,7 +437,9 @@ public class ComplexFunction implements complex_function {
 
 	}
 	
-	@Override
+	/** function to change the cuurent coplxfunction symbol to Min , move current node left and f1 right 
+	 * @param f1 - the functiob input can be of the the type Monom or Polynom or ComplexFunction 
+	 */
 	public void min(function f1) {
 		
 		ComplexFunction left = (ComplexFunction) this.copy();
@@ -383,7 +450,9 @@ public class ComplexFunction implements complex_function {
 	}
 
 	
-	@Override
+	/** function to change the cuurent coplxfunction symbol to Comp , move current node left and f1 right 
+	 * @param f1 - the functiob input can be of the the type Monom or Polynom or ComplexFunction 
+	 */
 	public void comp(function f1) {
 		
 		ComplexFunction left = (ComplexFunction) this.copy();
@@ -396,7 +465,13 @@ public class ComplexFunction implements complex_function {
 	
 
 	// Gets a Operation and Returns a Name for Operation
-	private String nameOperation(Operation checker) {
+	
+	/**
+	 * a helping function to cunvert Operation to string 
+	 * @param checker
+	 * @return the sting of the operation 
+	 */
+	public  String nameOperation(Operation checker) {
 		if (checker.equals(Operation.Plus))
 			return "plus";
 		else if (checker.equals(Operation.Times))
@@ -417,6 +492,7 @@ public class ComplexFunction implements complex_function {
 			 throw new RuntimeException("You enterd a wrong scine ! ");
 	}
 
+	
 	public String toString() {
 		String ans = "";
 
@@ -432,7 +508,15 @@ public class ComplexFunction implements complex_function {
 	
 	
 
-
+	/**
+	 * this function returns true or false but because coplex functions havw operation like max and min that can return right or left depending on f(x) so we can not know if two functions are alwaws equal thats why we 
+	 * the function check a lot of point's as the user input but stiil the answer my not alwas be true , if you want a reeal eccurcy take a as much wide range as you can. 
+	 * @param obj of the the type Monom or Polynom or ComplexFunction	
+	 * @param accurcy the steps of the function 
+	 * @param from what point to what point to check the equals
+	 * @value not always true ! only in the checked point there is absolute  coralation between the functions 
+	 * @return true or false ,not always true ! only in the checked point there is absolute  correlation between the functions 
+	 */
 	public boolean equals(Object obj, double accurcy,double width) {
 		
 		width=Math.abs(width); // makr it in absolute value 
@@ -452,8 +536,8 @@ public class ComplexFunction implements complex_function {
 				}
 				
 				
-			} catch (RuntimeException e) { // for the devid by zero problem just continue 
-				
+			} catch (RuntimeException e) { 
+				continue;// for the devid by zero problem just continue 
 			}
 			
 		
@@ -463,7 +547,15 @@ public class ComplexFunction implements complex_function {
 		return true; 
 	}
 	
-	@Override
+	/**
+	 * this function returns true or false with defualt range and step .   because complex functions have operation like max and min that can return right or left depending on f(x) so we can not know if two functions are always equal thats why we 
+	 * the function check a lot of point's as the user input but stiil the answer my not alwas be true , if you want a reeal eccurcy take a as much wide range as you can with the custum equals function . 
+	 * @param obj of the the type Monom or Polynom or ComplexFunction	
+	 * accurcy the steps of the function defualt (0.5)
+	 *  from what point to what point to check the equals defualt 1000
+	 * @value not always true ! only in the checked point there is absolute  coralation between the functions 
+	 * @return true or false ,not always true ! only in the checked point there is absolute  correlation between the functions 
+	 */
 	public boolean equals(Object obj) {
 		int a =0;
 		return equals( obj, 0.5,1000) ; // the defualt step
@@ -554,6 +646,11 @@ public class ComplexFunction implements complex_function {
 		p.voidCopy(g);
 		System.out.println(p.f(2));
 		
+		ComplexFunction ss = new ComplexFunction(Operation.Plus,new Monom("x"),new Monom("2x^2"));
+		ss.plus(new Monom("3x^3"));
+		ss.plus(new Monom("4x^4"));
+		
+		System.out.println(ss.toString());
 
 	}
 }
