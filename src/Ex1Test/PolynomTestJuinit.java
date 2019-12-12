@@ -1,4 +1,4 @@
-package myMath;
+package Ex1Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,10 @@ import java.util.Iterator;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
+
+import Ex1.Monom;
+import Ex1.Polynom;
+import Ex1.Polynom_able;
 
 class PolynomTestJuinit {
 	

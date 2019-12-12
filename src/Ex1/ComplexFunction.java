@@ -1,4 +1,4 @@
-package myMath;
+package Ex1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -376,15 +376,18 @@ public class ComplexFunction implements complex_function {
 	 * a deep copy function that return a coplex function. should be use as ComplexFunction aCopy = (ComplexFunction) a.copy();
 	 */
 	public function copy() {
-		if (this.symbol == null) { // the case it's Monom or Polynom 
-			Polynom temp = new Polynom(this.poly.toString()); // make a new deep copy of Polynom 
-			ComplexFunction copyNew = new ComplexFunction(); // make a new complexfunction 
-			copyNew.poly = temp; // put the poly in 
-			return copyNew;
-		} else {
-			ComplexFunction copyNew = new ComplexFunction(this.symbol, this.left.copy(), this.right.copy()); // do recursive call to left and right 
-			return copyNew;
-		}
+//		if (this.symbol == null) { // the case it's Monom or Polynom 
+//			Polynom temp = new Polynom(this.poly.toString()); // make a new deep copy of Polynom 
+//			ComplexFunction copyNew = new ComplexFunction(); // make a new complexfunction 
+//			copyNew.poly = temp; // put the poly in 
+//			return copyNew;
+//		} else {
+//			ComplexFunction copyNew = new ComplexFunction(this.symbol, this.left.copy(), this.right.copy()); // do recursive call to left and right 
+//			return copyNew;
+//		}
+		function copy = this.initFromString(this.toString());
+		return copy;
+	
 	}
 
 	/** function to change the cuurent coplxfunction symbol to plus , move current node left and f1 right 

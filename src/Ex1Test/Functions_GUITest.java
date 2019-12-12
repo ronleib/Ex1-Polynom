@@ -1,4 +1,4 @@
-package myMath;
+package Ex1Test;
 
 import java.util.Iterator;
 
@@ -6,14 +6,14 @@ import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import myMath.ComplexFunction;
-import myMath.Functions_GUI;
-import myMath.Monom;
-import myMath.Operation;
-import myMath.Polynom;
-import myMath.Range;
-import myMath.function;
-import myMath.functions;
+import Ex1.ComplexFunction;
+import Ex1.Functions_GUI;
+import Ex1.Monom;
+import Ex1.Operation;
+import Ex1.Polynom;
+import Ex1.Range;
+import Ex1.function;
+import Ex1.functions;
 /**
  * Note: minor changes (thanks to Amichai!!)
  * The use of "get" was replaced by iterator!
@@ -37,17 +37,13 @@ class Functions_GUITest {
 		Range rx = new Range(-10,10);
 		Range ry = new Range(-5,15);
 		data.drawFunctions(w,h,rx,ry,res);
-		String file = "function_file.txt";
-		String file2 = "function_file2.txt";
+		String file = "C:\\Users\\97254\\boaz\\Ex1\\src\\Ex1\\function_file (1).txt";
 		try {
 			data.saveToFile(file);
-			Functions_GUI data2 = new Functions_GUI();
-			data2.initFromFile(file);
-			data.saveToFile(file2);
 		}
 		catch(Exception e) {e.printStackTrace();}
 		
-		String JSON_param_file = "GUI_params.txt";
+		String JSON_param_file = "C:\\Users\\97254\\boaz\\Ex1\\src\\Ex1\\GUI_params.txt";
 		data.drawFunctions(JSON_param_file);
 	}
 	private functions _data=null;
@@ -76,7 +72,7 @@ class Functions_GUITest {
 		
 		ComplexFunction cf = new ComplexFunction(Operation.Plus, p1,p2);
 		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x +1"),cf3);
-		cf4.plus(new Monom("2"));
+		cf4.plus(new Monom("x"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());
 		cf.div(p1);

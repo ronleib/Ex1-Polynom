@@ -1,6 +1,10 @@
-package myMath;
+package Ex1;
 
 import java.util.Comparator;
+import Ex1.Monom;
+import Ex1.Polynom;
+import Ex1.Polynom;
+import Ex1.Functions_GUI;
 
 /**
  * This class represents a simple "Monom" of shape a*x^b, where a is a real

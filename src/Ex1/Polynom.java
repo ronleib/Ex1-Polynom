@@ -1,4 +1,4 @@
-package myMath;
+package Ex1;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,7 +6,8 @@ import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import myMath.Monom;
+
+import Ex1.Monom;
 
 /**
  * This class represents a Polynom with add, multiply functionality, it also
@@ -19,7 +20,7 @@ import myMath.Monom;
  */
 public class Polynom implements Polynom_able {
 
-	HashMap<Integer, Monom> polyMap; // the datastcture for the coefficient of the polynom
+	public HashMap<Integer, Monom> polyMap; // the datastcture for the coefficient of the polynom
 
 	/**
 	 * Zero (empty polynom) constracting an polynom of the form 0.0x^0

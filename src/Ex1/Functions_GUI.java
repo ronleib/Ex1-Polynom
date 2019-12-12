@@ -1,4 +1,4 @@
-package myMath;
+package Ex1;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,13 +15,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import myMath.ComplexFunction;
-import myMath.GUI_params;
-import myMath.Polynom;
-import myMath.Range;
-import myMath.StdDraw;
-import myMath.function;
-import myMath.functions;
+import Ex1.ComplexFunction;
+import Ex1.GUI_params;
+import Ex1.Polynom;
+import Ex1.Range;
+import Ex1.StdDraw;
+import Ex1.function;
+import Ex1.functions;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -39,12 +39,12 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public int size() {
-		return this.arrFunc.size();
+		return arrFunc.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return this.isEmpty();
+		return arrFunc.isEmpty();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public Iterator<function> iterator() {
-		return this.iterator();
+		return arrFunc.iterator();
 	}
 	@Override
 	public Object[] toArray() {
@@ -281,9 +281,6 @@ public class Functions_GUI implements functions {
 			e.printStackTrace();
 		}
 
-
-		
-		
 	}
 
 
@@ -293,22 +290,22 @@ public class Functions_GUI implements functions {
 	}
 	
 
-	public static void main(String[] args) throws IOException {
-		Functions_GUI func = new Functions_GUI();
-		func.initFromFile("C:\\Users\\semen\\Documents\\function_file.txt");
-		for (int i = 0; i < arrFunc.size(); i++) {
-			System.out.println(arrFunc.get(i));
-		}
-		
-			int w=1000, h=600, res=200;
-			Range rx = new Range(-10,10);
-			Range ry = new Range(-5,15);
-			//func.drawFunctions(w,h,rx,ry,res);
-			func.drawFunctions("C:\\Users\\semen\\Documents\\GUI_params (3).txt");
-			
-			
-		
-	}
+//	public static void main(String[] args) throws IOException {
+//		Functions_GUI func = new Functions_GUI();
+//		func.initFromFile("C:\\Users\\97254\\boaz\\Ex1\\src\\Ex1\\function_file (1).txt");
+//		for (int i = 0; i < arrFunc.size(); i++) {
+//			System.out.println(arrFunc.get(i));
+//		}
+//		
+//			int w=1000, h=600, res=200;
+//			Range rx = new Range(-10,10);
+//			Range ry = new Range(-5,15);
+//			//func.drawFunctions(w,h,rx,ry,res);
+//			func.drawFunctions("C:\\Users\\97254\\boaz\\Ex1\\src\\Ex1\\GUI_params.txt");
+//			
+//			
+//		
+//	}
 
 
 

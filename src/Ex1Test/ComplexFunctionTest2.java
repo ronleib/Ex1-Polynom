@@ -1,9 +1,14 @@
-package myMath;
+package Ex1Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
+
+import Ex1.ComplexFunction;
+import Ex1.Monom;
+import Ex1.Polynom;
+import Ex1.function;
 
 class ComplexFunctionTest2 {
 
@@ -94,7 +99,7 @@ class ComplexFunctionTest2 {
 		}
 	}
 	
-	
+	@Test
 	void testPlus() {//if it works and the f work the all the functions that are the same will work also ( div , mul ..) 
 		String[] monomsTest = {"", "x","3.2x^2","-3","-1.5x^2"};
 //		function [] complexFunctionTestPlus= {new ComplexFunction(),
