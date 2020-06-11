@@ -22,7 +22,7 @@ Two definitions of a monomial may be encountered.
 In the picture you can see the Monom of x^3 drawn by the draw function of the project 
 
 
-<a href="http://www.siz.co.il/my.php?i=ntokzjrdmtfh.png"><img src="http://up419.siz.co.il/img1/ntokzjrdmtfh.png" border="0" alt="MONOM" /></a>
+<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/g4zqwdtyzgzz.png" border="0" alt="CCCCC" /></a>
 
 ***
 **Polynomial**
@@ -50,8 +50,15 @@ Min: Min(f1,f2)
 Max: Max(f1,f2)
 None: f1
 Eror: illegal parameters from constructor.
-The implementation of this class is recursive method. First create complex function object, you can use 2 constructors:
+The implementation of this class is recursive method. First create complex function object
 
+**You can use initFromString to create complex function from string, use this operations: plus, mult, div, min, max,comp, none.**
+The class complex function contains the methods: plus,mult,div... the algorithm is recursive:
+if f2 is null, make f2 to be the parameter of the function.
+else make f1 to be the clone of this complex function, and f2 to the parameter. 
+Both of cases, the operation changed to the value of the function.
+The function left() and right() return the left and the right function of the complex function.
+f(X)- return the value of the complex function while x is the parameter of the function f. To do this, I calculate the left side in the right side recursively by calling f(left).f(x) and f(right).f(x), and then apply the operation between two numbers. The function comp is unusual , first I calculate the right side in x, and then calculate the left side by using f(rightSideSum).
 
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/g4zqwdtyzgzz.png" border="0" alt="CCCCC" /></a>
 
