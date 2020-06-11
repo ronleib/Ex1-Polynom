@@ -1,4 +1,6 @@
-#Polynom
+**Polynom
+***
+
 Welcome to Polynom's wiki. This project help you to learn about polynom. You can create function: 
 polynom, monom, and complex function. First, i will explain about monom calss. 
 monoms are the base of polynoms, monom defined in this form: ax^b , a is real number and b is natural number. 
@@ -13,7 +15,8 @@ Draw a graph of a function,
 equal between a function and much more.
 
 
-## Monom class
+**Monom class
+***
 
 In mathematics, a monomial is, roughly speaking, a polynomial which has only one term. 
 Two definitions of a monomial may be encountered.
@@ -23,7 +26,8 @@ In the picture you can see the Monom of x^3 drawn by the draw function of the pr
 <a href="http://www.siz.co.il/my.php?i=ntokzjrdmtfh.png"><img src="http://up419.siz.co.il/img1/ntokzjrdmtfh.png" border="0" alt="MONOM" /></a>
 
 
-## Polynomial
+**Polynomial
+***
 
 In mathematics, a polynomial is an expression consisting of variables (also called indeterminates) and coefficients, 
 That involves only the operations of addition, subtraction, multiplication, and non-negative integer exponents of variables. 
@@ -33,7 +37,8 @@ In the picture you can see the Polynom of x^4+5x+1 drawn by the draw function of
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/inc2xmjjhtgm.png" border="0" alt="POLINOM" /></a>
 
 
-##complexfunction
+**Complexfunction
+***
 
 ComplexFunction is an combination of Multiple Monoms and Polynom’s functions  with and Operation in between. 
 
