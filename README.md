@@ -24,5 +24,6 @@ In the picture you can see the Polynom of x^4+5x+1 drawn by the draw function of
 ##complexfunction
 
 ComplexFunction is an combination of Multiple Monoms and Polynom’s functions  with and Operation in between. 
-<a href="http://www.siz.co.il/my.php?i=g4zqwdtyzgzz.png"><img src="http://up419.siz.co.il/img1/g4zqwdtyzgzz.png" border="0" alt="CCCCC" /></a>
+
+<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/g4zqwdtyzgzz.png" border="0" alt="CCCCC" /></a>
 
