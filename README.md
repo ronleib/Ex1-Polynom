@@ -1,5 +1,4 @@
 **Polynom**
-***
 
 Welcome to Polynom's wiki. This project help you to learn about polynom. You can create function: 
 polynom, monom, and complex function. First, i will explain about monom calss. 
@@ -14,9 +13,9 @@ root and area for the Polynom function type,
 Draw a graph of a function,
 equal between a function and much more.
 
-
-**Monom class**
 ***
+**Monom class**
+
 
 In mathematics, a monomial is, roughly speaking, a polynomial which has only one term. 
 Two definitions of a monomial may be encountered.
@@ -25,9 +24,9 @@ In the picture you can see the Monom of x^3 drawn by the draw function of the pr
 
 <a href="http://www.siz.co.il/my.php?i=ntokzjrdmtfh.png"><img src="http://up419.siz.co.il/img1/ntokzjrdmtfh.png" border="0" alt="MONOM" /></a>
 
-
-**Polynomial**
 ***
+**Polynomial**
+
 
 In mathematics, a polynomial is an expression consisting of variables (also called indeterminates) and coefficients, 
 That involves only the operations of addition, subtraction, multiplication, and non-negative integer exponents of variables. 
@@ -40,7 +39,18 @@ In the picture you can see the Polynom of x^4+5x+1 drawn by the draw function of
 **Complexfunction**
 ***
 
-ComplexFunction is an combination of Multiple Monoms and Polynom’s functions  with and Operation in between. 
+The lest type of function(this class also implements function interface). Complex function represent 2 functions(monom,polynom or complex funcftion) with operation. The operations are: plus, mult, div, comp,none,min,max.
+Operation enum contains this values. 
+**Operation**
+Plus: plus(f1,f2) = f1+f2
+Times: mult(f1,f2) = f1*f2
+Divide: div(f1,f2) = f1/f2
+Comp: f1(f2)
+Min: Min(f1,f2)
+Max: Max(f1,f2)
+None: f1
+Eror: illegal parameters from constructor.
+The implementation of this class is recursive method. First create complex function object, you can use 2 constructors:
 
 
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/g4zqwdtyzgzz.png" border="0" alt="CCCCC" /></a>
